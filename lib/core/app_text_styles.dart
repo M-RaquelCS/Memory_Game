@@ -12,6 +12,9 @@ class AppTextStyles {
 
   static final TextStyle heading = GoogleFonts.luckiestGuy(fontSize: 18);
 
+  static final TextStyle headingWhite =
+      GoogleFonts.luckiestGuy(color: AppColors.white, fontSize: 18);
+
   static final TextStyle headingGreen =
       GoogleFonts.luckiestGuy(color: AppColors.green, fontSize: 18);
 

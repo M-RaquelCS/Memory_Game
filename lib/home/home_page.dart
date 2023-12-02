@@ -2,6 +2,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:memory_game/core/core.dart';
 import 'package:memory_game/home/widgets/GameButton/game_button_widget.dart';
+import 'package:memory_game/home/widgets/RecodButton/record_button_widget.dart';
+import 'package:memory_game/records/records_page.dart';
 // import 'package:memory_game/home/widgets/GameButton/game_button_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +22,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Logo do Memoriam game
           Column(
             children: [
               SizedBox(
@@ -89,6 +92,7 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
+          // Ações para iniciar o jogo
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -105,6 +109,46 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
+          // Ações para acessar Recordes
+          Container(
+            height: 164,
+            width: MediaQuery.of(context).size.width - 64,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              color: AppColors.gray700,
+            ),
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Recordes",
+                  style: AppTextStyles.headingGreen,
+                ),
+                RecordButton(
+                    title: "Modo Normal",
+                    action: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const RecordPage(title: "Recordes Modo Normal"),
+                          ));
+                    }),
+                RecordButton(
+                    title: "Modo IFPE",
+                    action: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const RecordPage(title: "Recordes Modo IFPE"),
+                          ));
+                    }),
+              ],
+            ),
+          ),
+          // Footer com as images do IFPE e Engenharia de Software
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
