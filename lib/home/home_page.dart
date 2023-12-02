@@ -1,8 +1,8 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:memory_game/core/core.dart';
 import 'package:memory_game/home/widgets/GameButton/game_button_widget.dart';
 import 'package:memory_game/home/widgets/RecodButton/record_button_widget.dart';
+import 'package:memory_game/levels/list_level_page.dart';
 import 'package:memory_game/records/records_page.dart';
 // import 'package:memory_game/home/widgets/GameButton/game_button_widget.dart';
 
@@ -100,12 +100,26 @@ class _HomePageState extends State<HomePage> {
               GameButton(
                 label: 'white',
                 title: 'Iniciar jogo',
-                action: () => Void,
+                action: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const ListLevelsPage(title: "Níveis Modo Normal"),
+                      ));
+                },
               ),
               GameButton(
                 label: 'green',
                 title: 'Iniciar jogo no modo IFPE',
-                action: () => Void,
+                action: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const ListLevelsPage(title: "Níveis Modo IFPE"),
+                      ));
+                },
               )
             ],
           ),
