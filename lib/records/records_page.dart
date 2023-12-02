@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memory_game/core/core.dart';
-import 'package:memory_game/records/widgets/AppBar/app_bar_widget.dart';
+import 'package:memory_game/widgets/AppBar/app_bar_widget.dart';
 
 class RecordPage extends StatefulWidget {
   final String title;
