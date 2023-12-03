@@ -1,13 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:memory_game/game/game_page.dart';
 import 'package:memory_game/levels/widgets/LevelButton/level_button_widget.dart';
 import 'package:memory_game/widgets/AppBar/app_bar_widget.dart';
 
 class ListLevelsPage extends StatefulWidget {
   final String title;
-  final numbers = [6, 8, 10, 12, 16, 18, 20, 22];
+  final List<int> numbers = [6, 8, 10, 12, 16, 18, 20, 22];
 
   ListLevelsPage({super.key, required this.title});
 
@@ -40,7 +38,16 @@ class _ListLevelsPageState extends State<ListLevelsPage> {
                 itemCount: widget.numbers.length,
                 itemBuilder: (context, index) {
                   return LevelButton(
-                      number: widget.numbers[index], action: () => Void);
+                    number: widget.numbers[index],
+                    action: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                GamePage(numberGame: widget.numbers[index]),
+                          ));
+                    },
+                  );
                 },
               ),
             ),
