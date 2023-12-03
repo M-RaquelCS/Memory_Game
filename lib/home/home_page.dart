@@ -104,20 +104,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const ListLevelsPage(title: "Níveis Modo Normal"),
-                      ));
-                },
-              ),
-              GameButton(
-                label: 'green',
-                title: 'Iniciar jogo no modo IFPE',
-                action: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const ListLevelsPage(title: "Níveis Modo IFPE"),
+                        builder: (context) => ListLevelsPage(title: "Níveis"),
                       ));
                 },
               )
@@ -125,7 +112,7 @@ class _HomePageState extends State<HomePage> {
           ),
           // Ações para acessar Recordes
           Container(
-            height: 164,
+            height: 120,
             width: MediaQuery.of(context).size.width - 64,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
@@ -147,16 +134,6 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                             builder: (context) =>
                                 const RecordPage(title: "Recordes Modo Normal"),
-                          ));
-                    }),
-                RecordButton(
-                    title: "Modo IFPE",
-                    action: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const RecordPage(title: "Recordes Modo IFPE"),
                           ));
                     }),
               ],
