@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                const RecordPage(title: "Recordes Modo Normal"),
+                                const RecordPage(title: "Recordes"),
                           ));
                     }),
               ],
