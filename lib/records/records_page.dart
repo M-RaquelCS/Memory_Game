@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memory_game/core/core.dart';
+import 'package:memory_game/records/widgets/RowRecord/row_record_widget.dart';
+import 'package:memory_game/utils/game_utils.dart';
 import 'package:memory_game/widgets/AppBar/app_bar_widget.dart';
 
 class RecordPage extends StatefulWidget {
@@ -12,6 +14,32 @@ class RecordPage extends StatefulWidget {
 }
 
 class _RecordPageState extends State<RecordPage> {
+  Game game = Game();
+  late Future<List<Widget>> recordWidgets;
+
+  @override
+  void initState() {
+    super.initState();
+    recordWidgets = loadRecordWidgets();
+  }
+
+  Future<List<Widget>> loadRecordWidgets() async {
+    // Garante que os dados estejam carregados antes de acessá-los
+    await game.loadData();
+
+    List<Widget> widgets = [];
+    for (int level in game.numbers) {
+      int plays = await game.getPlaysForLevel(level);
+
+      widgets.add(RowRecord(
+        level: level,
+        plays: plays,
+      ));
+    }
+
+    return widgets;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,96 +57,26 @@ class _RecordPageState extends State<RecordPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Top Recordes",
+                "Recordes da última jogada",
                 style: AppTextStyles.titleGreen,
               ),
               SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.gray700, // Cor de fundo
-                        borderRadius:
-                            BorderRadius.circular(10), // Bordas arredondadas
-                      ),
-                      padding: const EdgeInsets.all(16), // Espaçamento interno
-                      margin: const EdgeInsets.only(
-                          bottom: 8), // Espaçamento entre as Rows
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Nível 8",
-                            style: AppTextStyles.headingWhite,
-                          ),
-                          Text("6 jogadas", style: AppTextStyles.headingWhite)
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.gray700, // Cor de fundo
-                        borderRadius:
-                            BorderRadius.circular(10), // Bordas arredondadas
-                      ),
-                      padding: const EdgeInsets.all(16), // Espaçamento interno
-                      margin: const EdgeInsets.only(
-                          bottom: 8), // Espaçamento entre as Rows
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Nível 8",
-                            style: AppTextStyles.headingWhite,
-                          ),
-                          Text("6 jogadas", style: AppTextStyles.headingWhite)
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.gray700, // Cor de fundo
-                        borderRadius:
-                            BorderRadius.circular(10), // Bordas arredondadas
-                      ),
-                      padding: const EdgeInsets.all(16), // Espaçamento interno
-                      margin: const EdgeInsets.only(
-                          bottom: 8), // Espaçamento entre as Rows
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Nível 8",
-                            style: AppTextStyles.headingWhite,
-                          ),
-                          Text("6 jogadas", style: AppTextStyles.headingWhite)
-                        ],
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.gray700, // Cor de fundo
-                        borderRadius:
-                            BorderRadius.circular(10), // Bordas arredondadas
-                      ),
-                      padding: const EdgeInsets.all(16), // Espaçamento interno
-                      margin: const EdgeInsets.only(
-                          bottom: 8), // Espaçamento entre as Rows
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Nível 8",
-                            style: AppTextStyles.headingWhite,
-                          ),
-                          Text("6 jogadas", style: AppTextStyles.headingWhite)
-                        ],
-                      ),
-                    ),
-                  ],
+                child: FutureBuilder<List<Widget>>(
+                  future: recordWidgets,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text("Erro: ${snapshot.error}");
+                    } else {
+                      return Column(
+                        children: snapshot.data ?? [],
+                      );
+                    }
+                  },
                 ),
-              )
+              ),
             ],
           ),
         ),

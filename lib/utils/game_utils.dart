@@ -3,10 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:memory_game/core/app_images.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Game extends ChangeNotifier {
   int countTap = 0;
+  int totalTaps = 0;
+  int selectedLevel = 0;
+
   List<int> turnedCards = [];
   List<int> matchedCards = [];
+
+  final List<int> numbers = [6, 8, 10, 12, 16, 18, 20, 22];
 
   List<String>? cardsGameImg;
 
@@ -66,6 +73,11 @@ class Game extends ChangeNotifier {
 
           // Verificar se todas as cartas deram match
           if (matchedCards.length == cardsGameImg!.length) {
+            totalTaps = countTap;
+
+            savePlaysForLevel(selectedLevel, countTap);
+            saveData();
+
             print("foi tudo");
           }
         } else {
@@ -94,5 +106,29 @@ class Game extends ChangeNotifier {
   void resetTurnedCards() {
     turnedCards.clear();
     notifyListeners();
+  }
+
+  Future<void> saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('selectedLevel', selectedLevel);
+    prefs.setInt('totalTaps', totalTaps);
+  }
+
+  Future<void> loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    selectedLevel = prefs.getInt('selectedLevel') ?? 0;
+    totalTaps = prefs.getInt('totalTaps') ?? 0;
+  }
+
+  // Método para obter o número de jogadas associadas a um nível
+  Future<int> getPlaysForLevel(int level) async {
+    // Use o operador await para esperar a conclusão do Future
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('playsForLevel$level') ?? 0;
+  }
+
+  Future<void> savePlaysForLevel(int level, int plays) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('playsForLevel$level', plays);
   }
 }

@@ -9,7 +9,9 @@ class GamePage extends StatefulWidget {
   int tries = 0;
   Game game = Game();
 
-  GamePage({super.key, required this.numberGame});
+  GamePage({super.key, required this.numberGame}) {
+    game.selectedLevel = numberGame;
+  }
 
   @override
   State<GamePage> createState() => _GamePageState();
