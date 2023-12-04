@@ -25,6 +25,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/teachres/
     
   uses-material-design: true
 
