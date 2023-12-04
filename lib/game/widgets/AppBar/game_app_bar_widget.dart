@@ -1,10 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:memory_game/core/core.dart';
+import 'package:memory_game/utils/game_utils.dart';
 
 class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const GameAppBar({
-    Key? key,
-  }) : super(key: key);
+  final Game game;
+
+  const GameAppBar({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class GameAppBar extends StatelessWidget implements PreferredSizeWidget {
                 size: 28,
               ),
               Text(
-                '12', // Substitir pelo número de jogadas
+                '${game.countTap}',
                 style: AppTextStyles.heading20,
               ),
             ],

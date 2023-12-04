@@ -1,8 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:memory_game/core/app_images.dart';
-import 'package:memory_game/core/core.dart';
 import 'package:memory_game/game/widgets/AppBar/game_app_bar_widget.dart';
 import 'package:memory_game/utils/game_utils.dart';
 
@@ -24,7 +22,6 @@ class _GamePageState extends State<GamePage> {
 
     // Chamando a função para inicializar o jogo com o número de cartas desejado
     widget.game.generateImgCardsList(widget.numberGame);
-    print(widget.game.cardsGameImg);
   }
 
   @override
@@ -34,7 +31,7 @@ class _GamePageState extends State<GamePage> {
     final crossAxisCount = (screenWidth / cardWidth).floor();
 
     return Scaffold(
-      appBar: const GameAppBar(),
+      appBar: GameAppBar(game: widget.game),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,24 +56,22 @@ class _GamePageState extends State<GamePage> {
                       onTap: () {
                         widget.game.handleCardToTurnTap(index);
                         setState(() {
-                          widget.game.turnedCards.contains(index)
-                              ? (widget.game.cardsGameImg != null &&
-                                      index < widget.game.cardsGameImg!.length)
-                                  ? widget.game.cardsGameImg![index]
-                                  : AppImages.hidden
-                              : AppImages.hidden;
+                          if (widget.game.turnedCards.length == 2) {
+                            widget.game.checkMatch();
+
+                            // Atraso de 1 segundo antes de resetar as cartas viradas
+                            Future.delayed(const Duration(seconds: 1), () {
+                              widget.game.resetTurnedCards();
+                              setState(() {});
+                            });
+                          }
                         });
                       },
                       child: SizedBox(
                         width: 20,
                         height: 20,
                         child: Image.asset(
-                          widget.game.turnedCards.contains(index)
-                              ? (widget.game.cardsGameImg != null &&
-                                      index < widget.game.cardsGameImg!.length)
-                                  ? widget.game.cardsGameImg![index]
-                                  : AppImages.hidden
-                              : AppImages.hidden,
+                          widget.game.getImageForCard(index),
                         ),
                       ),
                     );

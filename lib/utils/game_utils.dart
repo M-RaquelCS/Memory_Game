@@ -6,6 +6,7 @@ import 'package:memory_game/core/app_images.dart';
 class Game extends ChangeNotifier {
   int countTap = 0;
   List<int> turnedCards = [];
+  List<int> matchedCards = [];
 
   List<String>? cardsGameImg;
 
@@ -48,10 +49,6 @@ class Game extends ChangeNotifier {
     }
 
     print(turnedCards);
-
-    if (turnedCards.length == 2) {
-      checkMatch();
-    }
   }
 
   void checkMatch() {
@@ -64,7 +61,13 @@ class Game extends ChangeNotifier {
         if (cardsGameImg![turnedCards[0]] == cardsGameImg![turnedCards[1]]) {
           countTap++;
           print("foi");
+          matchedCards.addAll(turnedCards);
           turnedCards.clear();
+
+          // Verificar se todas as cartas deram match
+          if (matchedCards.length == cardsGameImg!.length) {
+            print("foi tudo");
+          }
         } else {
           countTap++;
           turnedCards.clear();
@@ -72,5 +75,24 @@ class Game extends ChangeNotifier {
         }
       }
     });
+  }
+
+  String getImageForCard(int index) {
+    // Verificar se a carta está na lista de cartas que deram match
+    return matchedCards.contains(index)
+        ? (cardsGameImg != null && index < cardsGameImg!.length)
+            ? cardsGameImg![index]
+            : AppImages.hidden
+        // Verificar se a carta está na lista de cartas que foram clicadas
+        : turnedCards.contains(index)
+            ? (cardsGameImg != null && index < cardsGameImg!.length)
+                ? cardsGameImg![index]
+                : AppImages.hidden
+            : AppImages.hidden;
+  }
+
+  void resetTurnedCards() {
+    turnedCards.clear();
+    notifyListeners();
   }
 }
