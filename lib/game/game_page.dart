@@ -22,7 +22,6 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     super.initState();
 
-    // Chamando a função para inicializar o jogo com o número de cartas desejado
     widget.game.generateImgCardsList(widget.numberGame);
   }
 
