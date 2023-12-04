@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:memory_game/core/app_images.dart';
+import 'package:memory_game/success/success_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,7 +59,7 @@ class Game extends ChangeNotifier {
     print(turnedCards);
   }
 
-  void checkMatch() {
+  void checkMatch(BuildContext context) {
     Timer(const Duration(seconds: 1), () {
       // verificar se o jogo já começou (a lista de images geradas) e se já tem alguma selecionada.
       if (cardsGameImg != null &&
@@ -79,6 +80,12 @@ class Game extends ChangeNotifier {
             saveData();
 
             print("foi tudo");
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SuccessPage(),
+              ),
+            );
           }
         } else {
           countTap++;

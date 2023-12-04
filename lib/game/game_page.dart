@@ -59,7 +59,7 @@ class _GamePageState extends State<GamePage> {
                         widget.game.handleCardToTurnTap(index);
                         setState(() {
                           if (widget.game.turnedCards.length == 2) {
-                            widget.game.checkMatch();
+                            widget.game.checkMatch(context);
 
                             // Atraso de 1 segundo antes de resetar as cartas viradas
                             Future.delayed(const Duration(seconds: 1), () {
