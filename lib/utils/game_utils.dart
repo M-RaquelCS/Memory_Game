@@ -56,7 +56,7 @@ class Game extends ChangeNotifier {
       notifyListeners();
     }
 
-    print(turnedCards);
+    // print(turnedCards);
   }
 
   void checkMatch(BuildContext context) {
@@ -68,7 +68,7 @@ class Game extends ChangeNotifier {
           turnedCards.length == 2) {
         if (cardsGameImg![turnedCards[0]] == cardsGameImg![turnedCards[1]]) {
           countTap++;
-          print("foi");
+          // print("foi");
           matchedCards.addAll(turnedCards);
           turnedCards.clear();
 
@@ -79,7 +79,7 @@ class Game extends ChangeNotifier {
             savePlaysForLevel(selectedLevel, countTap);
             saveData();
 
-            print("foi tudo");
+            // print("foi tudo");
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
